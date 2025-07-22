@@ -4,6 +4,7 @@
 
 from __future__ import annotations
 
+import os
 import requests
 from typing import Dict, List, Any
 from datetime import datetime, timedelta
@@ -32,43 +33,43 @@ def get_stock_price(symbol: str) -> Dict[str, Any]:
     }
 
 
-def get_portfolio_data(user_id: str = "default") -> Dict[str, Any]:
+def get_portfolio_data(user_id: str = "default") -> str:
     """
-    사용자 포트폴리오 데이터 조회 (파일 시스템 또는 DB 접근)
-    
+    사용자의 포트폴리오 데이터를 텍스트 형식으로 불러옵니다.
+
     Args:
         user_id: 사용자 ID
-    
+
     Returns:
-        포트폴리오 데이터
+        포트폴리오 데이터가 담긴 텍스트. 데이터가 없을 경우 안내 메시지를 반환합니다.
     """
-    # 실제로는 파일이나 DB에서 읽어옴
-    return {
-        "user_id": user_id,
-        "holdings": [
-            {"symbol": "AAPL", "shares": 10, "avg_cost": 145.50},
-            {"symbol": "GOOGL", "shares": 5, "avg_cost": 2800.00},
-            {"symbol": "005930.KS", "shares": 20, "avg_cost": 75000}
-        ],
-        "cash": 50000,
-        "last_updated": datetime.now().isoformat()
-    }
-
-
-def save_portfolio_data(user_id: str, portfolio_data: Dict[str, Any]) -> Dict[str, str]:
-    """
-    포트폴리오 데이터 저장
+    portfolio_path = os.path.join("data", "portfolio", f"{user_id}_portfolio.txt")
+    if not os.path.exists(portfolio_path):
+        return "저장된 포트폴리오 데이터가 없습니다."
     
+    with open(portfolio_path, "r", encoding="utf-8") as f:
+        return f.read()
+
+
+def save_portfolio_data(user_id: str, portfolio_text: str) -> Dict[str, str]:
+    """
+    포트폴리오 데이터를 텍스트 형식으로 저장합니다.
+
     Args:
         user_id: 사용자 ID
-        portfolio_data: 저장할 포트폴리오 데이터
+        portfolio_text: 저장할 포트폴리오 내용 (텍스트)
     
     Returns:
         저장 결과
     """
-    # 실제로는 파일이나 DB에 저장
-    return {
-        "status": "success",
-        "message": f"Portfolio data saved for user {user_id}",
-        "timestamp": datetime.now().isoformat()
-    }
+    try:
+        data_dir = os.path.join("data", "portfolio")
+        os.makedirs(data_dir, exist_ok=True)
+        portfolio_path = os.path.join(data_dir, f"{user_id}_portfolio.txt")
+        
+        with open(portfolio_path, "w", encoding="utf-8") as f:
+            f.write(portfolio_text)
+            
+        return {"status": "success", "message": f"포트폴리오가 {portfolio_path}에 성공적으로 저장되었습니다."}
+    except Exception as e:
+        return {"status": "error", "message": f"포트폴리오 저장 중 오류 발생: {e}"}

@@ -7,6 +7,7 @@ Personal Assistant Tools Collection
 
 from __future__ import annotations
 
+from google.adk.tools import google_search
 from .web_tools import web_search, fetch_url_content, send_webhook
 from .stock_tools import get_stock_price, get_portfolio_data, save_portfolio_data
 from .diary_tools import save_diary_entry, load_diary_entries, search_diary_entries
@@ -17,6 +18,7 @@ WEB_TOOLS = [
     fetch_url_content,
     send_webhook
 ]
+
 
 STOCK_TOOLS = [
     get_stock_price,
