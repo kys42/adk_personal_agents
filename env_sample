@@ -1,0 +1,36 @@
+# Google ADK Personal Assistant 환경 설정
+
+# Google AI API 키 (필수)
+GOOGLE_API_KEY=KEY
+
+# Vertex AI 사용 여부 (선택사항)
+GOOGLE_GENAI_USE_VERTEXAI=FALSE
+
+# OAuth 설정 (향후 Google Calendar, Gmail 연동용)
+OAUTH_CLIENT_ID=your_oauth_client_id
+OAUTH_CLIENT_SECRET=your_oauth_client_secret
+
+# 주식 API (선택사항 - 실제 주식 데이터 연동시)
+# ALPHA_VANTAGE_API_KEY=your_alpha_vantage_api_key
+# YAHOO_FINANCE_API_KEY=your_yahoo_finance_api_key
+
+# 뉴스 API (선택사항)
+# NEWS_API_KEY=your_news_api_key
+
+# 사용자 설정
+USER_ID=default
+USER_NAME=사용자
+
+# 파일 저장 경로
+DATA_PATH=./data
+
+# 로그 레벨
+LOG_LEVEL=INFO
+
+# ADK 웹 서버 설정
+WEB_HOST=localhost
+WEB_PORT=8000
+
+# MCP 서버 설정 (향후 확장용)
+# NOTION_API_KEY=your_notion_api_key
+# CALENDAR_MCP_URL=http://localhost:8001
